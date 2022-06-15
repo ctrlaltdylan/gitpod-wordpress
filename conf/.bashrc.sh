@@ -1,6 +1,5 @@
 
 # WordPress Setup Script
-export REPO_NAME=$(basename $GITPOD_REPO_ROOT)
 
 function wp-init-database () {
   # user     = wordpress
@@ -31,8 +30,8 @@ function wp-setup () {
   mv ${GITPOD_REPO_ROOT}/* $HOME/workspace/
   
   # create a debugger launch.json
-  mkdir -p ${GITPOD_REPO_ROOT}/.theia
-  mv $HOME/gitpod-wordpress/conf/launch.json ${GITPOD_REPO_ROOT}/.theia/launch.json
+  # mkdir -p ${GITPOD_REPO_ROOT}/.theia
+  # mv $HOME/gitpod-wordpress/conf/launch.json ${GITPOD_REPO_ROOT}/.theia/launch.json
   
   # create a database for this WordPress
   echo 'Creating MySQL user and database ...'
@@ -66,9 +65,10 @@ function wp-setup () {
 
   # put the project files in the correct place
   echo 'Creating project files ...'
-  PROJECT_PATH=${GITPOD_REPO_ROOT}/${APACHE_DOCROOT}/wp-content/$1/${REPO_NAME}
+  PROJECT_PATH=${GITPOD_REPO_ROOT}/${APACHE_DOCROOT}/wp-content/$1/$2
   mkdir -p $PROJECT_PATH
-  mv $HOME/workspace/* ${PROJECT_PATH}
+  mv $HOME/workspace/* ${GITPOD_REPO_ROOT}/
+  mv ${GITPOD_REPO_ROOT}/apps/${PROJECT_PATH}
   cd $DESTINATION
 
   # install project dependencies
@@ -94,6 +94,8 @@ function wp-setup () {
   # finish
   shopt -u dotglob
   touch $FLAG
+
+  cd $GITPOD_REPO_ROOT
   
   echo 'Done!'
 }
