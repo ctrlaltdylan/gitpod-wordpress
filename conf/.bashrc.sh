@@ -101,11 +101,11 @@ function wp-setup () {
 }
 
 function wp-setup-theme () {
-  wp-setup "themes"
+  wp-setup "themes" $1
 }
 
 function wp-setup-plugin () {
-  wp-setup "plugins"
+  wp-setup "plugins" $1
 }
 
 export -f wp-setup-theme
